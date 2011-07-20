@@ -1,0 +1,23 @@
+# NOTE: replace all square brackets comments with your real values
+
+# Global PHP settings
+php_value expose_php off
+php_value magic_quotes_gpc Off
+php_value date.timezone "Europe/Berlin"
+
+<VirtualHost [virtual_host_name]:80>
+  ServerName   [server_name]
+  DocumentRoot [absolute_path_to_your_project]/demo/doc_root/
+
+  SetEnv SERVER_PROFILE   dev
+
+  RewriteEngine on
+  RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-f
+  RewriteRule ^.*$ /xp-web [PT,L]
+
+  Alias /xp-web [absolute_path_to_xp-framework]/tools/tools/web.php
+  <Location /xp-web>
+    php_value include_path ~:[absolute_path_to_xp-framework]/core:[absolute_path_to_xp-framework]/tools
+  </Location>
+
+</VirtualHost>
